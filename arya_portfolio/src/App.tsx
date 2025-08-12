@@ -49,9 +49,9 @@ function App() {
       <About />
       <Education />
       <Certifications />
+      <CertificatesSection />
       <Skills />
       <Awards />
-      <CertificatesSection />
       <Languages />
       <Projects />
       <WhyHireMe />
