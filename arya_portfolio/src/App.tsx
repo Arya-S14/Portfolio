@@ -6,11 +6,13 @@ import Education from './components/Education';
 import Certifications from './components/Certifications';
 import Skills from './components/Skills';
 import Awards from './components/Awards';
+import CertificatesSection from './components/CertificatesSection';
 import Languages from './components/Languages';
 import Projects from './components/Projects';
 import WhyHireMe from './components/WhyHireMe';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+
 
 function App() {
   useEffect(() => {
@@ -49,6 +51,7 @@ function App() {
       <Certifications />
       <Skills />
       <Awards />
+      <CertificatesSection />
       <Languages />
       <Projects />
       <WhyHireMe />
