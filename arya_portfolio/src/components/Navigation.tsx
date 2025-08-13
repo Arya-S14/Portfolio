@@ -50,7 +50,7 @@ const Navigation: React.FC = () => {
   const handleDownloadResume = () => {
    
     const link = document.createElement('a');
-    link.href = '/assets/ARYA_SABALE_VIIT.pdf';
+    link.href = '/ARYA_SABALE_VIIT.pdf';
     link.download = 'ARYA_SABALE_VIIT.pdf';
     link.click();
   };
