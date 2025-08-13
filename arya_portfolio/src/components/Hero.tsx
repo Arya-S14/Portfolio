@@ -28,7 +28,7 @@ const Hero: React.FC = () => {
 
   const handleDownloadResume = () => {
     const link = document.createElement('a');
-    link.href = '/ARYA_SABALE_VIIT.pdf';
+    link.href = '/assets/ARYA_SABALE_VIIT.pdf';
     link.download = 'ARYA_SABALE_VIIT.pdf';
     link.click();
   };
