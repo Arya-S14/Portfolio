@@ -48,10 +48,10 @@ const Navigation: React.FC = () => {
   };
 
   const handleDownloadResume = () => {
-    // Replace with actual resume file path
+   
     const link = document.createElement('a');
-    link.href = '/resume.pdf';
-    link.download = 'John_Doe_Resume.pdf';
+    link.href = '/ARYA_SABALE_VIIT';
+    link.download = 'ARYA_SABALE_VIIT.pdf';
     link.click();
   };
 
