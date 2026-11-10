@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Download } from 'lucide-react';
 
+const navItems = [
+  { id: 'hero', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'education', label: 'Education' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'research', label: 'Research' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'certifications', label: 'Credentials' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'awards', label: 'Awards' },
+  { id: 'languages', label: 'Languages' },
+  { id: 'contact', label: 'Contact' },
+];
+
 const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-
-  const navItems = [
-    { id: 'hero', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'education', label: 'Education' },
-    { id: 'certifications', label: 'Certifications' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'awards', label: 'Awards' },
-    { id: 'languages', label: 'Languages' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'hire', label: 'Why Hire Me' },
-    { id: 'contact', label: 'Contact' },
-  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,10 +49,9 @@ const Navigation: React.FC = () => {
   };
 
   const handleDownloadResume = () => {
-   
     const link = document.createElement('a');
     link.href = '/ARYA_SABALE_VIIT.pdf';
-    link.download = 'ARYA_SABALE_VIIT.pdf';
+    link.download = 'Arya_Sabale_Resume.pdf';
     link.click();
   };
 
@@ -65,14 +65,14 @@ const Navigation: React.FC = () => {
               onClick={() => scrollToSection('hero')}
               className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200"
             >
-              Portfolio
+              AS
             </button>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              {navItems.slice(0, 8).map((item) => (
+              {navItems.filter((item) => ['about', 'experience', 'projects', 'research', 'certifications', 'contact'].includes(item.id)).map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}

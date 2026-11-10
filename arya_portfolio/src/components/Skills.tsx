@@ -1,198 +1,212 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Code, Database, Palette, Server, Smartphone, Globe, Zap, Users } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  ArrowUpRight,
+  BrainCircuit,
+  Braces,
+  Cloud,
+  Code2,
+  Database,
+  Layers3,
+  Search,
+  Workflow
+} from 'lucide-react';
+
+const skillGroups = [
+  {
+    id: 'programming',
+    title: 'Programming',
+    icon: Code2,
+    description: 'Core programming languages and problem-solving foundations for building and shipping software.',
+    skills: ['Python', 'Java', 'C++', 'JavaScript', 'SQL', 'Object-oriented programming', 'Data structures and algorithms']
+  },
+  {
+    id: 'ai',
+    title: 'AI & machine learning',
+    icon: BrainCircuit,
+    description: 'From supervised learning to generative models: designing, integrating, and evaluating AI-powered applications.',
+    skills: ['Machine learning', 'Deep learning', 'Natural language processing', 'Generative AI', 'Large language models', 'AI agents', 'Prompt engineering', 'LangChain']
+  },
+  {
+    id: 'retrieval',
+    title: 'Search & RAG',
+    icon: Search,
+    description: 'Building and benchmarking retrieval pipelines that connect source documents with language models.',
+    skills: ['Retrieval-augmented generation', 'Embeddings', 'Document chunking', 'Semantic search', 'FAISS', 'BM25', 'MPNet', 'Dense retrieval', 'Sparse retrieval', 'Hybrid retrieval']
+  },
+  {
+    id: 'frameworks',
+    title: 'Frameworks & libraries',
+    icon: Layers3,
+    description: 'Development tools and ML libraries used across projects, prototypes, and research.',
+    skills: ['TensorFlow', 'Scikit-learn', 'Hugging Face', 'FastAPI', 'React', 'Node.js', 'Express.js', 'Android · Java / XML']
+  },
+  {
+    id: 'data',
+    title: 'APIs, data & cloud',
+    icon: Database,
+    description: 'Connecting applications to APIs, persistent data stores, and cloud infrastructure.',
+    skills: ['REST APIs', 'MongoDB', 'MySQL', 'Redis', 'AWS S3', 'AWS EC2', 'Google Docs API', 'Gmail API', 'Firebase', 'Socket.IO', 'BullMQ']
+  },
+  {
+    id: 'engineering',
+    title: 'Engineering workflow',
+    icon: Workflow,
+    description: 'Practical habits for building reliable applications, automations, and maintainable project code.',
+    skills: ['Git', 'GitHub', 'Debugging', 'Testing', 'Performance evaluation', 'API integration', 'Workflow automation', 'JWT authentication', 'Role-based access control', 'Make.com']
+  },
+  {
+    id: 'web',
+    title: 'Web & product',
+    icon: Braces,
+    description: 'Frontend and product skills for turning concepts into clear, accessible, responsive experiences.',
+    skills: ['HTML', 'CSS', 'Bootstrap', 'Tailwind CSS', 'Responsive design', 'UI implementation', 'Flexbox']
+  },
+  {
+    id: 'cloud-platforms',
+    title: 'AI platforms',
+    icon: Cloud,
+    description: 'Experience connecting model APIs and modern AI services with end-to-end applications.',
+    skills: ['OpenAI API', 'GPT-4-mini', 'LLaMA 3', 'Mistral 7B', 'Groq', 'Pipedream', 'Cursor IDE', 'Hugging Face']
+  }
+];
+
+const skillNotes: Record<string, string> = {
+  'Retrieval-augmented generation': 'Applied to a legal-assistant project; the resume reports 73.7% Top-5 retrieval accuracy across 300 queries.',
+  FAISS: 'Used for vector search in hybrid retrieval experiments.',
+  BM25: 'Used for sparse document retrieval and hybrid-search evaluation.',
+  MPNet: 'Used to generate semantic embeddings for information retrieval.',
+  'Document chunking': 'Used to prepare source documents for indexing and retrieval.',
+  'AI agents': 'Built an eight-agent business-operations workflow and separate AI automation projects.',
+  'Make.com': 'Used to connect a resume-review AI agent with Google Docs and Gmail APIs.',
+  'Google Docs API': 'Integrated with a resume-review workflow for document processing.',
+  'Gmail API': 'Integrated to automate user responses from an AI workflow.',
+  FastAPI: 'Used to expose retrieval and AI functionality through backend APIs.',
+  'AWS S3': 'Included in the cloud and infrastructure toolkit.',
+  'AWS EC2': 'Included in the cloud and infrastructure toolkit.',
+  'Socket.IO': 'Used in the NxtBiz real-time application stack.',
+  BullMQ: 'Used to coordinate background jobs in NxtBiz.',
+  'Role-based access control': 'Implemented in AI business-platform backend workflows.',
+  'Performance evaluation': 'Included benchmark analysis across retrieval configurations and queries.',
+  'Large language models': 'Hands-on projects integrate GPT-4-mini, LLaMA 3, and Mistral 7B.'
+};
 
 const Skills: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [activeGroup, setActiveGroup] = useState(skillGroups[0].id);
+  const [activeSkill, setActiveSkill] = useState(skillGroups[0].skills[0]);
+  const selectedGroup = skillGroups.find((group) => group.id === activeGroup) ?? skillGroups[0];
+  const focusedSkill = selectedGroup.skills.includes(activeSkill) ? activeSkill : selectedGroup.skills[0];
+  const GroupIcon = selectedGroup.icon;
 
-  const skillCategories = [
-    {
-      icon: <Code className="w-8 h-8" />,
-      title: "Frontend Development",
-      color: "from-cyan-500 to-blue-600",
-      skills: [
-        { name: "React", level: 95 },
-        { name: "TypeScript", level: 90 },
-        { name: "JavaScript", level: 98 },
-        { name: "Tailwind CSS", level: 92 },
-        { name: "HTML5", level: 100 },
-        { name: "CSS", level: 100 },
-        { name: "Bootstrap", level: 100 },
-
-      ]
-    },
-    {
-      icon: <Server className="w-8 h-8" />,
-      title: "Backend Development",
-      color: "from-purple-500 to-pink-600",
-      skills: [
-        { name: "Node.js", level: 90 },
-        { name: "Python", level: 100 },
-        { name: "Java", level: 100 },
-        { name: "Express.js", level: 85 },
-      ]
-    },
-    {
-      icon: <Database className="w-8 h-8" />,
-      title: "Database & Cloud",
-      color: "from-green-500 to-teal-600",
-      skills: [
-        { name: "MongoDB", level: 100 },
-        { name: "PostgreSQL", level: 70 },
-        { name: "AWS", level: 80 },
-        { name: "Firebase Database", level: 100 },
-        { name: "SQL", level: 100 }
-      ]
-    },
-    {
-      icon: <Smartphone className="w-8 h-8" />,
-      title: "Mobile Development",
-      color: "from-orange-500 to-red-600",
-      skills: [
-        { name: "Flutter", level: 78 },
-        { name: "Android (Java)", level: 90 }
-      ]
-    }
-  ];
-
-  const softSkills = [
-    { icon: <Users className="w-6 h-6" />, name: "Team Work", level: 92 },
-    { icon: <Globe className="w-6 h-6" />, name: "Leadership", level: 95 },
-    { icon: <Zap className="w-6 h-6" />, name: "Problem Solving", level: 98 },
-    { icon: <Palette className="w-6 h-6" />, name: "Creative Thinking", level: 88 }
-  ];
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const SkillBar: React.FC<{ skill: { name: string; level: number }; delay: number; color: string }> = ({ skill, delay, color }) => (
-    <div className="mb-4">
-      <div className="flex justify-between items-center mb-2 text-white">
-        <span className="text-sm font-medium text-light-700">{skill.name}</span>
-        <span className="text-sm font-bold text-white-600">{skill.level}%</span>
-      </div>
-      <div className="w-full bg-gray-200 rounded-full h-2.5">
-        <div
-          className={`bg-gradient-to-r ${color} h-2.5 rounded-full transition-all duration-1000 ease-out`}
-          style={{
-            width: isVisible ? `${skill.level}%` : '0%',
-            transitionDelay: `${delay}ms`
-          }}
-        ></div>
-      </div>
-    </div>
-  );
+  const selectGroup = (groupId: string) => {
+    const group = skillGroups.find((item) => item.id === groupId);
+    if (!group) return;
+    setActiveGroup(group.id);
+    setActiveSkill(group.skills[0]);
+  };
 
   return (
-    <section id="skills" ref={sectionRef} className="py-20 bg-gradient-to-br from-slate-900 to-slate-800">
+    <section id="skills" className="py-24 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-            My <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">Skills</span>
+        <div className="max-w-3xl mb-12">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300 mb-3">An interactive toolkit</p>
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-5">
+            Skills for turning <span className="text-cyan-300">AI into applications.</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Technologies and expertise I bring to every project
+          <p className="text-lg text-slate-400">
+            Explore the technologies and methods listed on my resume. Pick a focus area, then
+            select a skill to see how it connects to my project work.
           </p>
         </div>
 
-        {/* Technical Skills */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {skillCategories.map((category, categoryIndex) => (
-            <div
-              key={categoryIndex}
-              className="bg-white/10 backdrop-blur-md rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 hover:scale-105 group border border-white/20"
-            >
-              <div className={`inline-flex items-center justify-center p-3 bg-gradient-to-r ${category.color} rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <div className="text-white">{category.icon}</div>
-              </div>
-              
-              <h3 className="text-xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors duration-300">
-                {category.title}
-              </h3>
+        <div className="grid gap-6 lg:grid-cols-[18rem_1fr]">
+          <div
+            role="tablist"
+            aria-label="Skill categories"
+            className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0"
+          >
+            {skillGroups.map((group) => {
+              const Icon = group.icon;
+              const isSelected = group.id === activeGroup;
+              return (
+                <button
+                  key={group.id}
+                  type="button"
+                  role="tab"
+                  id={`skills-tab-${group.id}`}
+                  aria-selected={isSelected}
+                  aria-controls="skills-panel"
+                  onClick={() => selectGroup(group.id)}
+                  className={`flex shrink-0 items-center gap-3 rounded-xl border px-4 py-3 text-left transition lg:w-full ${
+                    isSelected
+                      ? 'border-cyan-300/40 bg-cyan-300/10 text-cyan-100'
+                      : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/20 hover:text-white'
+                  }`}
+                >
+                  <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                  <span className="text-sm font-medium">{group.title}</span>
+                  <span className="ml-auto hidden rounded-full bg-white/10 px-2 py-0.5 text-xs lg:inline">
+                    {group.skills.length}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
 
-              <div className="space-y-3">
-                {category.skills.map((skill, skillIndex) => (
-                  <SkillBar
-                    key={skillIndex}
-                    skill={skill}
-                    delay={categoryIndex * 200 + skillIndex * 100}
-                    color={category.color}
-                  />
-                ))}
+          <div
+            id="skills-panel"
+            role="tabpanel"
+            aria-labelledby={`skills-tab-${selectedGroup.id}`}
+            className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-8"
+          >
+            <div className="flex items-start gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan-300/10 text-cyan-300">
+                <GroupIcon className="h-6 w-6" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="text-sm font-medium text-cyan-300">{selectedGroup.skills.length} resume skills</p>
+                <h3 className="mt-1 text-2xl font-bold text-white">{selectedGroup.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">{selectedGroup.description}</p>
               </div>
             </div>
-          ))}
-        </div>
 
-        {/* Soft Skills */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
-          <h3 className="text-2xl font-bold text-white mb-8 text-center">
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              Soft Skills
-            </span>
-          </h3>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {softSkills.map((skill, index) => (
-              <div key={index} className="text-center">
-                <div className="inline-flex items-center justify-center p-4 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full mb-4 hover:scale-110 transition-transform duration-300">
-                  <div className="text-white">{skill.icon}</div>
-                </div>
-                <h4 className="text-white font-semibold mb-2">{skill.name}</h4>
-                <div className="relative w-16 h-16 mx-auto">
-                  <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                    <circle
-                      cx="32"
-                      cy="32"
-                      r="28"
-                      fill="none"
-                      stroke="rgba(255,255,255,0.2)"
-                      strokeWidth="4"
-                    />
-                    <circle
-                      cx="32"
-                      cy="32"
-                      r="28"
-                      fill="none"
-                      stroke="url(#gradient)"
-                      strokeWidth="4"
-                      strokeDasharray={`${2 * Math.PI * 28}`}
-                      strokeDashoffset={isVisible ? `${2 * Math.PI * 28 * (1 - skill.level / 100)}` : `${2 * Math.PI * 28}`}
-                      strokeLinecap="round"
-                      style={{
-                        transition: 'stroke-dashoffset 1s ease-out',
-                        transitionDelay: `${index * 200}ms`
-                      }}
-                    />
-                    <defs>
-                      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#06b6d4" />
-                        <stop offset="100%" stopColor="#8b5cf6" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">{skill.level}%</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <div className="mt-7 flex flex-wrap gap-2.5">
+              {selectedGroup.skills.map((skill) => (
+                <button
+                  key={skill}
+                  type="button"
+                  aria-pressed={focusedSkill === skill}
+                  onClick={() => setActiveSkill(skill)}
+                  className={`rounded-lg border px-3.5 py-2.5 text-sm transition ${
+                    focusedSkill === skill
+                      ? 'border-cyan-300/50 bg-cyan-300/15 font-semibold text-cyan-100 shadow-[0_0_20px_rgba(103,232,249,0.08)]'
+                      : 'border-white/10 bg-slate-900/80 text-slate-300 hover:border-cyan-200/30 hover:text-white'
+                  }`}
+                >
+                  {skill}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-7 rounded-xl border border-cyan-200/10 bg-cyan-300/[0.045] p-5" aria-live="polite">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">Skill spotlight</p>
+              <h4 className="mt-2 text-lg font-semibold text-white">{focusedSkill}</h4>
+              <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                {skillNotes[focusedSkill] ?? `${focusedSkill} is part of my working toolkit in ${selectedGroup.title.toLowerCase()}.`}
+              </p>
+              <a
+                href="#projects"
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-cyan-200 hover:text-white"
+              >
+                See related project work
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </div>
+
+        <p className="mt-6 text-sm text-slate-500">
+          Skills and tooling reflect the experience described in the current resume and portfolio projects.
+        </p>
       </div>
     </section>
   );

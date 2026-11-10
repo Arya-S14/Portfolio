@@ -1,83 +1,32 @@
 import React from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, Github, Linkedin } from 'lucide-react';
 
-const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-
-  return (
-    <footer className="bg-slate-900 text-white py-12 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand Section */}
-          <div>
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4">
-              Arya Sabale
-            </h3>
-            <p className="text-gray-300 leading-relaxed">
-              Passionate full-stack developer creating digital experiences that make a difference. 
-              Always exploring new technologies and pushing the boundaries of what's possible.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-            <nav className="space-y-2">
-              {[
-                { name: 'About', id: 'about' },
-                { name: 'Projects', id: 'projects' },
-                { name: 'Skills', id: 'skills' },
-                { name: 'Contact', id: 'contact' }
-              ].map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => {
-                    const element = document.getElementById(link.id);
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className="block text-gray-300 hover:text-cyan-400 transition-colors duration-200"
-                >
-                  {link.name}
-                </button>
-              ))}
-            </nav>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Get In Touch</h4>
-            <div className="space-y-2 text-gray-300">
-              <p>📧 aryaofficialaas14@gmail.com</p>
-              <p>📍 Pune, India</p>
-            </div>
-          </div>
+const Footer: React.FC = () => (
+  <footer className="bg-slate-950 text-white">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="font-semibold">Arya Sabale</p>
+          <p className="mt-1 text-sm text-slate-400">AI / ML · Research · Software engineering</p>
         </div>
-
-        {/* Divider */}
-        <div className="border-t border-slate-700 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            {/* Back to Top Button */}
-            <button
-              onClick={scrollToTop}
-              className="flex items-center px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-full hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 group"
-            >
-              <ArrowUp className="w-4 h-4 mr-2 group-hover:animate-bounce" />
-              Back to Top
-            </button>
-          </div>
+        <div className="flex items-center gap-5">
+          <a href="https://github.com/Arya-S14" target="_blank" rel="noreferrer" aria-label="GitHub" className="text-slate-400 hover:text-white">
+            <Github className="h-5 w-5" aria-hidden="true" />
+          </a>
+          <a href="https://www.linkedin.com/in/aryasabale/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="text-slate-400 hover:text-white">
+            <Linkedin className="h-5 w-5" aria-hidden="true" />
+          </a>
+          <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white">
+            Back to top
+            <ArrowUp className="h-4 w-4" aria-hidden="true" />
+          </button>
         </div>
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"></div>
-    </footer>
-  );
-};
+      <div className="mt-7 border-t border-white/10 pt-5 text-xs text-slate-500">
+        © {new Date().getFullYear()} Arya Sabale
+      </div>
+    </div>
+  </footer>
+);
 
 export default Footer;

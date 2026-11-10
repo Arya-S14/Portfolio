@@ -1,136 +1,126 @@
 import React from 'react';
-import { Award, Calendar, Shield } from 'lucide-react';
+import { ArrowUpRight, BadgeCheck } from 'lucide-react';
 
-const Certifications: React.FC = () => {
-  const certifications = [
-    {
-      title: "Youth Parliament",
-      issuer: "MESA Vishwakarma Institute of Information Technology",
-      date: "2025",
-      icon: "🏗️",
-      color: "from-orange-500 to-red-600",
-      description: "Participated in a panel discussing policy-making, youth leadership, and societal change. Contributing insights and opinions on contemporary issues."
-    },
-    {
-      title: "Machine Learning Certificate",
-      issuer: "LEAPS",
-      date: "2025",
-      icon: "☁️",
-      color: "from-blue-500 to-indigo-600",
-      description: "Completed a certified training program covering linear regression algorithms, data preprocessing, model evaluation, and deployment techniques."
-    },
-    {
-      title: "7 Days of Hands-On AI Development Bootcamp and Certification",
-      issuer: "Udemy",
-      date: "2025",
-      icon: "🔷",
-      color: "from-cyan-500 to-blue-600",
-      description: "Gained hands-on experience in building AI solutions using real-world datasets."
-    },
-    {
-      title: "Responsive Website Development ",
-      issuer: "NxtWave",
-      date: "2025",
-      icon: "⚙️",
-      color: "from-purple-500 to-pink-600",
-      description: "Designed and developed a fully responsive personal portfolio website using HTML5, CSS3, and Bootstrap, optimized for cross-device compatibility."
-    },
-    {
-      title: "Model Context Protocol (MCP)",
-      issuer: "NxtWave",
-      date: "2025",
-      icon: "⚛️",
-      color: "from-cyan-400 to-blue-500",
-      description: "Completed training on MCP, model interoperability, and efficient AI communication protocols and developed Projects."
-    },
-    {
-      title: "Static Website Development",
-      issuer: "NxtWave",
-      date: "2025",
-      icon: "🛡️",
-      color: "from-red-500 to-orange-600",
-      description: "Built a professional static website using HTML and CSS, ensuring fast load speed, clean UI, and SEO-friendly design."
-    }
-  ];
+const certifications = [
+  {
+    title: 'IBM Machine Learning Professional Certificate',
+    issuer: 'IBM · Coursera',
+    date: '27 May 2026',
+    image: '/certificates/ibm-machine-learning.png',
+    verification: 'https://coursera.org/verify/professional-cert/8U06RT1NFHPI',
+    description: 'Six courses spanning exploratory data analysis, supervised and unsupervised learning, deep learning, reinforcement learning, and a machine-learning capstone.'
+  },
+  {
+    title: 'Generative AI Fundamentals Specialization',
+    issuer: 'IBM · Coursera',
+    date: '30 March 2026',
+    image: '/certificates/ibm-generative-ai.png',
+    verification: 'https://coursera.org/verify/specialization/BJXTRNE9FS9A',
+    description: 'Five courses covering generative AI, prompt engineering, foundation models, ethical considerations, and business applications.'
+  },
+  {
+    title: 'AI Workflows & Automation Workshop',
+    issuer: 'NxtWave · CCBP 4.0 Academy',
+    date: '22 January 2026',
+    image: '/certificates/nxtwave-ai-workflows.jpg',
+    verification: 'https://cdn1.ccbp.in/misc/workshop-acad-make-workshop-completion/F1AFARXHQO.png',
+    description: 'Project completion workshop on Make.com, AI agents, MCP servers, APIs, and end-to-end automation.'
+  },
+  {
+    title: 'Introduction to Databases',
+    issuer: 'NxtWave · CCBP 4.0 Academy',
+    date: '14 December 2025',
+    image: '/certificates/nxtwave-databases.jpg',
+    verification: 'https://certificates.ccbp.in/academy/introduction-to-databases?id=GISZGAHJJJ',
+    description: 'Course certificate covering SQL and database fundamentals.'
+  },
+  {
+    title: 'MCP Project · MCP Mega Workshop',
+    issuer: 'NxtWave · CCBP 4.0 Academy',
+    date: '24 August 2025',
+    image: '/certificates/nxtwave-mcp-project.jpg',
+    verification: 'https://cdn1.ccbp.in/misc/workshop-acad-mcp-mega-workshop-completion/0D0M4P9EYM.png',
+    description: 'Hands-on project exploring the Model Context Protocol with Cursor IDE, Pipedream, MCP servers, and prompt-driven AI workflows.'
+  },
+  {
+    title: 'Build Your Own Responsive Website',
+    issuer: 'NxtWave · CCBP 4.0 Academy',
+    date: '29 July 2025',
+    image: '/certificates/nxtwave-responsive-website.jpg',
+    verification: 'https://certificates.ccbp.in/academy/build-your-own-responsive-website?id=OKMAYBZYVE',
+    description: 'Course completion in responsive web development using Bootstrap and Flexbox.'
+  },
+  {
+    title: 'Build Your Own Static Website',
+    issuer: 'NxtWave · CCBP 4.0 Academy',
+    date: '1 July 2025',
+    image: '/certificates/nxtwave-static-website.jpg',
+    verification: 'https://certificates.ccbp.in/academy/static-website?id=HVGZZJQAZJ',
+    description: 'Course completion covering HTML, CSS, and Bootstrap.'
+  }
+];
 
-  return (
-    <section id="certifications" className="py-20 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
-            <span className="bg-gradient-to-r from-cyan-500 to-purple-600 bg-clip-text text-transparent">Certifications</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Professional certifications that validate my technical and Non-Technical expertise
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 overflow-visible">
-          {certifications.map((cert, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group overflow-hidden"
-            >
-              {/* Header with gradient */}
-              <div className={`bg-gradient-to-r ${cert.color} p-6 relative overflow-hidden`}>
-                <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full transform translate-x-8 -translate-y-8"></div>
-                <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/10 rounded-full transform -translate-x-4 translate-y-4"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-3xl">{cert.icon}</div>
-                    <Award className="w-6 h-6 text-white/80" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{cert.title}</h3>
-                  <p className="text-white/90 font-medium">{cert.issuer}</p>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center text-gray-600">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    <span className="text-sm font-medium">{cert.date}</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <Shield className="w-4 h-4 mr-2" />
-                    <span className="text-xs">Verified</span>
-                  </div>
-                </div>
-
-                <p className="text-gray-700 mb-4 leading-relaxed">{cert.description}</p>
-
-              
-              </div>
-
-              {/* Hover effect overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 to-purple-600/0 group-hover:from-cyan-500/5 group-hover:to-purple-600/5 transition-all duration-300"></div>
-            </div>
-          ))}
-        </div>
-
-        {/* Stats */}
-        <div className="mt-16 text-center">
-          <div className="inline-flex items-center justify-center space-x-8 bg-white rounded-2xl shadow-lg p-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-purple-600 bg-clip-text text-transparent">
-                {certifications.length}+
-              </div>
-              <div className="text-gray-600 font-medium">Certifications</div>
-            </div>
-            <div className="w-px h-12 bg-gray-200"></div>
-            <div className="text-center">
-              <div className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent">
-                100%
-              </div>
-              <div className="text-gray-600 font-medium">Verified</div>
-            </div>
-          </div>
-        </div>
+const Certifications: React.FC = () => (
+  <section id="certifications" className="py-24 bg-slate-50">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mb-14">
+        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-700 mb-3">Credentials</p>
+        <h2 className="text-4xl sm:text-5xl font-bold text-slate-950 mb-5">
+          Learning, with <span className="text-cyan-700">proof.</span>
+        </h2>
+        <p className="text-lg text-slate-600">
+          Certificates from IBM, Coursera, and NxtWave. Select a certificate to view its image,
+          or open the original public verification record.
+        </p>
       </div>
-    </section>
-  );
-};
+
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {certifications.map((cert) => (
+          <article key={cert.title} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+            <a href={cert.image} target="_blank" rel="noreferrer" aria-label={`View ${cert.title} certificate image`} className="block overflow-hidden bg-slate-100">
+              <img
+                src={cert.image}
+                alt={`${cert.title} certificate issued to Arya Sabale`}
+                loading="lazy"
+                className="h-56 w-full object-contain p-3 transition-transform duration-300 hover:scale-[1.02]"
+              />
+            </a>
+            <div className="p-6">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm font-medium text-cyan-800">{cert.issuer}</p>
+                  <h3 className="mt-2 text-xl font-bold leading-snug text-slate-950">{cert.title}</h3>
+                </div>
+                <BadgeCheck className="mt-1 h-5 w-5 shrink-0 text-emerald-600" aria-hidden="true" />
+              </div>
+              <p className="mt-3 text-sm text-slate-500">{cert.date}</p>
+              <p className="mt-4 min-h-16 text-sm leading-relaxed text-slate-600">{cert.description}</p>
+              <a
+                href={cert.verification}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-800 hover:text-cyan-950"
+              >
+                View original credential
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p className="mt-8 text-sm text-slate-500">
+        <a
+          href="https://drive.google.com/drive/folders/1-qahe7RtFb08NJvP-hX1l-utjOl7HX6G?usp=sharing"
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium text-cyan-800 underline underline-offset-4 hover:text-cyan-950"
+        >
+          Open the shared certificate archive
+        </a>
+        {' '}for the original certificate files.
+      </p>
+    </div>
+  </section>
+);
 
 export default Certifications;

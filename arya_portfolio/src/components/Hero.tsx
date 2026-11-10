@@ -1,123 +1,117 @@
 import React, { useEffect, useState } from 'react';
-import { Download, ChevronDown } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Download, Github, Linkedin, Mail } from 'lucide-react';
+
+const roles = ['AI / ML Engineer', 'Applied AI Developer', 'Researcher & Builder'];
 
 const Hero: React.FC = () => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const titles = ['Full Stack Developer', 'UI/UX Enthusiast', 'Problem Solver', 'Tech Innovator'];
-
   useEffect(() => {
-    const currentTitle = titles[currentIndex];
-    const timeout = setTimeout(() => {
-      if (!isDeleting && displayText.length < currentTitle.length) {
-        setDisplayText(currentTitle.substring(0, displayText.length + 1));
-      } else if (isDeleting && displayText.length > 0) {
-        setDisplayText(currentTitle.substring(0, displayText.length - 1));
-      } else if (!isDeleting && displayText.length === currentTitle.length) {
-        setTimeout(() => setIsDeleting(true), 1500);
-      } else if (isDeleting && displayText.length === 0) {
-        setIsDeleting(false);
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % titles.length);
-      }
-    }, isDeleting ? 50 : 100);
+    const title = roles[currentIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting && displayText === title) {
+      timeout = setTimeout(() => setIsDeleting(true), 1400);
+    } else if (isDeleting && displayText.length === 0) {
+      setIsDeleting(false);
+      setCurrentIndex((index) => (index + 1) % roles.length);
+    } else {
+      timeout = setTimeout(() => {
+        setDisplayText((text) => title.slice(0, text.length + (isDeleting ? -1 : 1)));
+      }, isDeleting ? 45 : 85);
+    }
 
     return () => clearTimeout(timeout);
-  }, [displayText, currentIndex, isDeleting, titles]);
+  }, [currentIndex, displayText, isDeleting]);
 
-  const handleDownloadResume = () => {
-    const link = document.createElement('a');
-    link.href = '/ARYA_SABALE_VIIT.pdf';
-    link.download = 'ARYA_SABALE_VIIT.pdf';
-    link.click();
-  };
-
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const scrollToProjects = () => {
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+    <section id="hero" className="relative min-h-screen overflow-hidden bg-slate-950 text-white flex items-center">
+      <div className="absolute inset-0" aria-hidden="true">
+        <div className="absolute -top-40 right-[-8rem] h-[28rem] w-[28rem] rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="absolute bottom-[-12rem] left-[-8rem] h-[32rem] w-[32rem] rounded-full bg-blue-700/20 blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(15,23,42,0.1),#020617_70%)]" />
       </div>
 
-      
-      
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.3fr_0.7fr] lg:px-8">
+        <div>
+          <p className="inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm text-cyan-100">
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            Open to AI engineering internship opportunities
+          </p>
+          <h1 className="mt-8 text-5xl font-bold tracking-tight sm:text-7xl">
+            Arya <span className="text-cyan-300">Sabale</span>
+          </h1>
+          <p className="mt-4 min-h-9 text-xl text-slate-300 sm:text-2xl">
+            {displayText}<span className="animate-blink text-cyan-300" aria-hidden="true">|</span>
+          </p>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
+            Computer Science and Engineering (AI &amp; ML) student at VIIT Pune, building
+            AI-powered applications, retrieval systems, and tools grounded in research.
+          </p>
 
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        {/* Profile Image */}
-        <div className="mb-8">
-          <div className="relative inline-block">
-            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 p-1">
-              <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center">
-                <img
-                  src="https://res.cloudinary.com/dhnu8milu/image/upload/v1754972946/ARYA_PROFILE1_hejnxx.jpg"
-                  alt="Profile"
-                  className="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-slate-800 animate-pulse"></div>
+          <div className="mt-8 flex flex-wrap gap-3 text-sm text-slate-300">
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">CGPA 9.64 / 10</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">IEEE-published researcher</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Pune, India</span>
+          </div>
+
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <a
+              href="/ARYA_SABALE_VIIT.pdf"
+              download="Arya_Sabale_Resume.pdf"
+              className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-200"
+            >
+              <Download className="h-4 w-4" aria-hidden="true" />
+              Download resume
+            </a>
+            <button
+              type="button"
+              onClick={scrollToProjects}
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-cyan-200 hover:text-cyan-200"
+            >
+              Explore my work
+              <ArrowDown className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="mt-8 flex items-center gap-5">
+            <a href="https://github.com/Arya-S14" target="_blank" rel="noreferrer" aria-label="GitHub profile" className="text-slate-400 hover:text-white">
+              <Github className="h-5 w-5" aria-hidden="true" />
+            </a>
+            <a href="https://www.linkedin.com/in/aryasabale/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile" className="text-slate-400 hover:text-white">
+              <Linkedin className="h-5 w-5" aria-hidden="true" />
+            </a>
+            <a href="mailto:aryaofficialaas14@gmail.com" aria-label="Email Arya" className="text-slate-400 hover:text-white">
+              <Mail className="h-5 w-5" aria-hidden="true" />
+            </a>
           </div>
         </div>
 
-        {/* Name */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-4 animate-fade-in-up">
-          <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-           Arya Sabale
-          </span>
-        </h1>
-
-        {/* Animated Title */}
-        <div className="h-12 sm:h-16 mb-8">
-          <p className="text-xl sm:text-2xl lg:text-3xl text-gray-300 font-light">
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              {displayText}
-            </span>
-            <span className="animate-blink text-cyan-400">|</span>
-          </p>
-        </div>
-
-        {/* Description */}
-        <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed animate-fade-in-up delay-300">
-          Saltator @VIIT | Computer Science and Engineering (Artificial Intelligence and Machine Learning) Undergraduate | Fellow at Nxtwave's CCBP 4.0 Academy | Completed Hand-on Projects       </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-in-up delay-500">
-          <button
-            onClick={handleDownloadResume}
-            className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-full font-semibold text-lg hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25 transform"
-          >
-            <span className="flex items-center">
-              <Download className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-              Download Resume
-            </span>
-          </button>
-
-          <button
-            onClick={scrollToAbout}
-            className="px-8 py-4 border-2 border-cyan-500/50 text-cyan-400 rounded-full font-semibold text-lg hover:bg-cyan-500/10 hover:border-cyan-400 hover:text-cyan-300 transition-all duration-300 hover:scale-105"
-          >
-            View My Work
-          </button>
+        <div className="mx-auto w-full max-w-sm">
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-cyan-950/30">
+            <div className="overflow-hidden rounded-[1.5rem] bg-slate-800">
+              <img
+                src="/arya-professional-photo.png"
+                alt="Arya Sabale"
+                className="aspect-[4/5] w-full object-cover"
+              />
+            </div>
+            <div className="flex items-center justify-between gap-4 px-2 pb-2 pt-5">
+              <div>
+                <p className="font-semibold text-white">AI, research &amp; engineering</p>
+                <p className="mt-1 text-sm text-slate-400">Learning by building and measuring.</p>
+              </div>
+              <ArrowUpRight className="h-5 w-5 shrink-0 text-cyan-300" aria-hidden="true" />
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <button
-        onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400 hover:text-cyan-400 transition-colors duration-300 animate-bounce"
-      >
-        <ChevronDown className="w-8 h-8" />
-      </button>
     </section>
   );
 };
